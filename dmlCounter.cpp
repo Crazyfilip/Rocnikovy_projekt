@@ -48,7 +48,7 @@ void init_gen()
 		p4 = rand();
 		p5 = rand();
 		p6 = rand();
-	} while ((p1 == 0) && (p2 == 0) && (p3 == 0) && (p4 == 0) && (p5 == 0) && (p6 == 0));
+	} while ((p1 == 0) && (p2 == 0) && (p3 == 0) && (p4 == 0) && (p5 == 0) && (p6 == 0)); // until it's zero values repeat
 }
 
 // Declaration of six dimensional qube
@@ -56,17 +56,6 @@ void init_gen()
 class Q6
 {
 public:
-
-  std::ofstream output_dml; 
-  
-  Q6() 
-  {
-    output_dml.open("Founded_DML.txt",std::ios::app); // insert target address
-  }
-  ~Q6() 
-  {
-    output_dml.close();
-  }
   
   static const int magic_constant = 189;
 
@@ -91,11 +80,14 @@ public:
   
   void save_dml()
   {
+    std::ofstream output_dml; 
+    output_dml.open("Founded_DML.txt",std::ios::app); // insert target address
     for (size_t i = 0; i < 64; i++)
     {
-      output_dml << " " << vrcholy[0];
+      output_dml << " " << vrcholy[i];
     }
     output_dml << "\n";
+    output_dml.close();
   }
 };
 
@@ -370,6 +362,7 @@ Rcpp::NumericVector count_dml()
       cube.save_dml();
     }
     iter_counter++;
+    cube.init();
     try 
     {
       Rcpp::checkUserInterrupt();
